@@ -2,6 +2,7 @@ import { TodoProvider } from './contexts/index'
 import './App.css'
 import { useEffect, useState } from 'react'
 import TodoForm from './components/TodoForm';
+import TodoItem from './components/TodoItem'
 
 function App() {
 
@@ -30,9 +31,9 @@ function App() {
   }
 
   // Update todo
-  const updateTodo = (id, todo) => {
+  const updateTodo = (id, todoMssg) => {
     setTodos(prev =>
-      prev.map(prevTodo => (prevTodo.id === id ? { ...prevTodo, todo: todo } : prevTodo))
+      prev.map(prevTodo => (prevTodo.id === id ? { ...prevTodo, todo: todoMssg } : prevTodo))
     )
   }
 
@@ -56,6 +57,13 @@ function App() {
           </div>
           <div className="flex flex-wrap gap-y-3">
             {/*Loop and Add TodoItem here */}
+            {
+              todos.map(todo => (
+                <div key={todo.id} className='w-full'>
+                  <TodoItem value={todo} />
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
