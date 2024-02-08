@@ -1,10 +1,25 @@
 import TodoProvider from './contexts/index'
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
 
   const [todos, setTodos] = useState([]);
+
+
+  // Local storage
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem("todos"))
+
+    if (todos && todos.length > 0) {
+      setTodos(todos)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
+
 
   /**
    * Add Todo functionality
