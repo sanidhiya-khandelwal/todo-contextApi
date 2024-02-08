@@ -1,27 +1,12 @@
-import { TodoProvider } from './contexts/index'
-import './App.css'
-import { useEffect, useState } from 'react'
+import { TodoProvider } from './contexts/index';
+import './App.css';
+import { useEffect, useState } from 'react';
 import TodoForm from './components/TodoForm';
-import TodoItem from './components/TodoItem'
+import TodoItem from './components/TodoItem';
 
 function App() {
 
   const [todos, setTodos] = useState([]);
-
-
-  // Local storage
-  useEffect(() => {
-    const todos = JSON.parse(localStorage.getItem("todos"))
-
-    if (todos && todos.length > 0) {
-      setTodos(todos)
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos))
-  }, [todos])
-
 
   /**
    * Add Todo functionality
@@ -46,6 +31,19 @@ function App() {
     setTodos(prevTodos => prevTodos.map(prevTodo => prevTodo.id === id ? { ...prevTodo, completed: !prevTodo.completed } : prevTodo))
   }
 
+  // Local storage
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem("todos"))
+
+    if (todos && todos.length > 0) {
+      setTodos(todos)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
+
   return (
     <TodoProvider value={{ todos, addTodo, updateTodo, deleteTodo, toggleComplete }}>
       <div className="bg-[#172842] min-h-screen py-8">
@@ -59,8 +57,9 @@ function App() {
             {/*Loop and Add TodoItem here */}
             {
               todos.map(todo => (
-                <div key={todo.id} className='w-full'>
-                  <TodoItem value={todo} />
+                <div key={todo.id}
+                  className='w-full'>
+                  <TodoItem todo={todo} />
                 </div>
               ))
             }
